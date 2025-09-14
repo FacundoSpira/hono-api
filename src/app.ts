@@ -4,13 +4,13 @@ import { requestId } from "hono/request-id";
 import { notFound } from "@/middlewares/not-found";
 import { onError } from "@/middlewares/on-error";
 import { pinoLogger } from "@/middlewares/pino-logger";
+import { serveEmojiFavicon } from "@/middlewares/serve-emoji-favicon";
 import posts from "@/routers/posts";
 import type { AppBindings } from "@/types/app-bindings";
 
 const app = new Hono<AppBindings>();
 
-app.use(requestId());
-app.use(pinoLogger());
+app.use(requestId()).use(pinoLogger()).use(serveEmojiFavicon("🚀"));
 
 // Health check
 app.get("/", (c) => {
