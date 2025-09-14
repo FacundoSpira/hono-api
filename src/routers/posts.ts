@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 import { z } from "zod";
+
 import { db } from "@/database/db";
 import { postsTable } from "@/database/schema";
+import type { AppBindings } from "@/types/app-bindings";
 
-const posts = new Hono();
+const posts = new Hono<AppBindings>();
 
 const createPostSchema = z.object({
 	title: z.string().min(1),
