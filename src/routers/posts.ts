@@ -1,11 +1,10 @@
-import { Hono } from "hono";
 import { z } from "zod";
 
 import { db } from "@/database/db";
 import { postsTable } from "@/database/schema";
-import type { AppBindings } from "@/types/app-bindings";
+import { createRouter } from "@/lib/create-app";
 
-const posts = new Hono<AppBindings>();
+const posts = createRouter();
 
 const createPostSchema = z.object({
 	title: z.string().min(1),
