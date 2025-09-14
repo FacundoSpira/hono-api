@@ -1,8 +1,7 @@
-import "dotenv/config";
-
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import z from "zod";
+import env from "./env";
 import posts from "./routers/posts";
 
 const app = new Hono();
@@ -24,7 +23,7 @@ app.onError((error, context) => {
 serve(
 	{
 		fetch: app.fetch,
-		port: 3000,
+		port: env.PORT,
 	},
 	(info) => {
 		console.log(`Server is running on http://localhost:${info.port}`);

@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { z } from "zod";
-import { db } from "../database/db";
-import { postsTable } from "../database/schema";
+import { db } from "@/database/db";
+import { postsTable } from "@/database/schema";
 
 const posts = new Hono();
 

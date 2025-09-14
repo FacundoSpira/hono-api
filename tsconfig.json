@@ -1,13 +1,16 @@
 {
 	"compilerOptions": {
 		"esModuleInterop": true,
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"target": "esnext",
 		"lib": ["esnext"],
 		"skipLibCheck": true,
 		"strict": true,
-		"outDir": "./dist"
+		"outDir": "./dist",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"exclude": ["node_modules"]
 }
