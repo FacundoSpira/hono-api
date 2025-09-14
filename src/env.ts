@@ -22,6 +22,7 @@ const envSchema = z.object({
 
 export type Env = z.infer<typeof envSchema>;
 
+// biome-ignore lint/style/noProcessEnv: only valid usage of process.env
 const parsedEnv = envSchema.safeParse(process.env);
 
 if (parsedEnv.error) {
