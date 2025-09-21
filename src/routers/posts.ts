@@ -1,5 +1,5 @@
+import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-
 import { db } from "@/database/db";
 import { postsTable } from "@/database/schema";
 import { createRouter } from "@/lib/create-app";
@@ -11,22 +11,21 @@ const createPostSchema = z.object({
 	content: z.string().min(1),
 });
 
-posts.get("/", async (context) => {
+posts.get("/", async (c) => {
 	const posts = await db.select().from(postsTable).limit(10);
 
-	return context.json({ posts });
+	return c.json({ posts });
 });
 
-posts.post("/", async (context) => {
-	const body = await context.req.json();
-	const parsedBody = createPostSchema.parse(body);
+posts.post("/", zValidator("json", createPostSchema), async (c) => {
+	const { title, content } = c.req.valid("json");
 
 	const post = await db
 		.insert(postsTable)
-		.values({ title: parsedBody.title, content: parsedBody.content })
+		.values({ title, content })
 		.returning();
 
-	return context.json({ post });
+	return c.json({ post });
 });
 
 export default posts;
