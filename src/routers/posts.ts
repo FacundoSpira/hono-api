@@ -12,9 +12,13 @@ const createPostSchema = z.object({
 	content: z.string().min(1),
 });
 
-postsRouter.get("/", async (c) => {
-	const limit = c.req.query("limit") ?? 10;
-	const offset = c.req.query("offset") ?? 0;
+const listParamsSchema = z.object({
+	limit: z.coerce.number().min(1).max(100).default(10),
+	offset: z.coerce.number().min(0).default(0),
+});
+
+postsRouter.get("/", zValidator("query", listParamsSchema), async (c) => {
+	const { limit, offset } = c.req.valid("query");
 
 	const posts = await db
 		.select()
